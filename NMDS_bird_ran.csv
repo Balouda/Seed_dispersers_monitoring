@@ -1,0 +1,36 @@
+sensor,habitat,deployment,Agapornis canus,Artamella viridis,Ceblepyris cinereus,Copsychus albospecularis,Coracopsis nigra,Coracopsis vaza,Coua caerulea,Coua cristata,Coua reynaudii,Cyanolanius madagascarinus,Dicrurus forficatus,Hartlaubius auratus,Hypsipetes madagascariensis,Leptopterus chabert,Margaroperdix madagarensis,Monticola sharpei,Neodrepanis coruscans,Nesoenas picturatus,Philepitta castanea,Ploceus nelicourvi,Zosterops maderaspatanus
+Arboreal,Forest,AND04,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+Arboreal,Forest,AND06,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Arboreal,Forest,AND08,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+Arboreal,Forest,AND10,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
+Arboreal,Forest,RAN02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+Arboreal,Natural regeneration,VOL01,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0
+Arboreal,Restoration,ABV01,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+Arboreal,Restoration,AMB01,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,0,0
+Arboreal,Restoration,AMB02,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0
+AudioMoth,Forest,AND04,0,0,1,1,1,0,1,0,0,0,1,0,1,0,0,1,1,0,0,1,1
+AudioMoth,Forest,AND06,1,0,1,1,1,1,1,0,0,1,1,0,1,0,0,0,1,1,0,1,0
+AudioMoth,Forest,AND08,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,0,0,0,1
+AudioMoth,Forest,AND10,1,0,1,1,1,1,1,0,0,1,1,0,1,1,0,0,1,0,0,0,1
+AudioMoth,Forest,AND12,1,0,1,1,1,1,1,0,0,1,1,0,1,1,0,1,1,0,0,1,0
+AudioMoth,Forest,AND13,1,0,1,1,1,1,1,0,0,1,1,0,1,1,0,0,1,0,1,1,1
+AudioMoth,Forest,RAN01,0,0,1,1,1,1,1,1,0,0,1,0,1,0,0,0,1,0,0,0,1
+AudioMoth,Forest,RAN02,0,0,1,1,1,1,1,0,0,1,1,0,1,1,0,1,1,0,0,0,0
+AudioMoth,Forest,RAN03,0,0,1,1,1,1,1,1,1,1,1,0,1,1,0,0,1,0,0,0,1
+AudioMoth,Forest,RAN04,1,0,1,1,1,1,1,1,0,1,1,0,1,1,0,0,1,0,0,0,0
+AudioMoth,Forest,RAN05,0,0,1,1,1,1,1,0,0,1,1,0,1,1,0,0,1,0,0,0,1
+AudioMoth,Forest,RAN06,0,0,1,1,1,1,1,1,0,1,1,0,1,1,0,0,1,0,0,1,1
+AudioMoth,Natural regeneration,VOL01,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+AudioMoth,Natural regeneration,VOL05,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+AudioMoth,Restoration,ABV01,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+AudioMoth,Restoration,ABV02,0,0,0,1,1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1
+AudioMoth,Restoration,AMB01,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,1,0,0,0,0,1
+AudioMoth,Restoration,AMB02,1,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,1
+Terrestrial,Forest,AND08,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+Terrestrial,Forest,AND10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Terrestrial,Forest,AND12,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+Terrestrial,Forest,RAN04,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Terrestrial,Forest,RAN05,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Terrestrial,Natural regeneration,VOL01,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0
+Terrestrial,Restoration,AMB01,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+Terrestrial,Restoration,AMB02,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0

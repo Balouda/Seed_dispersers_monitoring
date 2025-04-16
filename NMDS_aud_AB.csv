@@ -1,0 +1,15 @@
+Schedule,Habitat,deployment,Agapornis canus,Ceblepyris cinereus,Copsychus albospecularis,Coracopsis nigra,Coracopsis vaza,Coua caerulea,Coua cristata,Coua reynaudii,Cyanolanius madagascarinus,Dicrurus forficatus,Hartlaubius auratus,Hypsipetes madagascariensis,Leptopterus chabert,Monticola sharpei,Neodrepanis coruscans,Nesoenas picturatus,Philepitta castanea,Ploceus nelicourvi,Zosterops maderaspatanus
+A,Forest,AND02,1,0,1,1,0,1,0,1,1,0,0,1,1,1,1,0,1,0,0
+A,Forest,AND06,1,1,1,1,1,1,0,0,0,1,0,1,0,0,1,0,0,1,0
+A,Forest,AND13,1,1,1,1,1,1,0,0,1,0,0,1,0,0,1,0,0,1,1
+A,Forest,RAN03,0,1,1,1,1,1,1,1,1,1,0,1,1,0,1,0,0,0,1
+A,Forest,RAN05,0,1,1,1,1,1,0,0,1,1,0,1,1,0,1,0,0,0,0
+A,Restoration,ABV02,0,0,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1
+A,Restoration,AMB02,1,0,1,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,1
+B,Forest,AND02,0,1,1,1,0,1,1,0,1,1,0,1,1,0,1,0,0,0,1
+B,Forest,AND06,0,1,1,1,1,1,0,0,1,1,0,1,0,0,1,1,0,0,0
+B,Forest,AND13,0,1,1,0,0,1,0,0,1,1,0,1,1,0,1,0,1,0,0
+B,Forest,RAN03,0,1,1,1,1,1,0,1,1,1,0,1,1,0,1,0,0,0,1
+B,Forest,RAN05,0,1,1,1,1,1,0,0,1,1,0,1,0,0,1,0,0,0,1
+B,Restoration,ABV02,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1
+B,Restoration,AMB02,0,0,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1
