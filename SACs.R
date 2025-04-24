@@ -4,57 +4,57 @@ library(vegan)
 library(ggplot2)
 
 
-cl<-read.csv("cl.csv")
+cl<-read.csv("cl.csv") #Cleared land camera trap data
 cl$X<-NULL
 
-fb<-read.csv("fb.csv")
+fb<-read.csv("fb.csv") #Burned Forest camera trap data
 fb$X<-NULL
-fb_a<-read.csv("fb_a.csv")
+fb_a<-read.csv("fb_a.csv") #Burned Forest arboreal camera trap data
 fb_a$X<-NULL
-fb_t<-read.csv("fb_t.csv")
+fb_t<-read.csv("fb_t.csv")  #Burned Forest terrestrial camera trap data
 fb_t$X<-NULL
 
-forest<-read.csv("forest.csv")
+forest<-read.csv("forest.csv") #Mature protected forests camera trap data
 forest$X<-NULL
-forest_a<-read.csv("forest_a.csv")
+forest_a<-read.csv("forest_a.csv") #Mature protected forests arboreal camera trap data
 forest_a$X<-NULL
-forest_t<-read.csv("forest_t.csv")
+forest_t<-read.csv("forest_t.csv") #Mature protected forests terrestrial camera trap data
 forest_t$X<-NULL
 
-nr<-read.csv("nr.csv")
+nr<-read.csv("nr.csv") #Natural regeneration camera trap data
 nr$X<-NULL
-nr_a<-read.csv("nr_a.csv")
+nr_a<-read.csv("nr_a.csv") #Natural regeneration  arboreal camera trap data
 nr_a$X<-NULL
-nr_t<-read.csv("nr_t.csv")
+nr_t<-read.csv("nr_t.csv") #Natural regeneration terrestrial camera trap data
 nr_t$X<-NULL
 
-plantation<-read.csv("plantation.csv")
+plantation<-read.csv("plantation.csv") #Plantation camera trap data
 plantation$X<-NULL
-plantation_a<-read.csv("plantation_a.csv")
+plantation_a<-read.csv("plantation_a.csv") #Plantation arboreal camera trap data
 plantation_a$X<-NULL
-plantation_t<-read.csv("plantation_t.csv")
+plantation_t<-read.csv("plantation_t.csv") #Plantation terrestrial camera trap data
 plantation_t$X<-NULL
 
-restoration<-read.csv("restoration.csv")
+restoration<-read.csv("restoration.csv") #Restoration camera trap data
 restoration$X<-NULL
-restoration_a<-read.csv("restoration_a.csv")
+restoration_a<-read.csv("restoration_a.csv") #Restoration arboreal camera trap
 restoration_a$X<-NULL
-restoration_t<-read.csv("restoration_t.csv")
+restoration_t<-read.csv("restoration_t.csv") #Restoration terrestrial camera trap data
 restoration_t$X<-NULL
 
-forest_AB<-read.csv("SAC_audio_forest_AB.csv")
+forest_AB<-read.csv("SAC_audio_forest_AB.csv") #Mature protected forests AudioMoth schedule AB data
 forest_AB$X<-NULL
-forest_A<-read.csv("SAC_audio_forest_A.csv")
+forest_A<-read.csv("SAC_audio_forest_A.csv")  #Mature protected forests AudioMoth schedule A data
 forest_A$X<-NULL
-forest_B<-read.csv("SAC_audio_forest_B.csv")
+forest_B<-read.csv("SAC_audio_forest_B.csv")  #Mature protected forests AudioMoth schedule B data
 forest_B$X<-NULL
-restoration_AB<-read.csv("SAC_audio_restoration_AB.csv")
+restoration_AB<-read.csv("SAC_audio_restoration_AB.csv")  #Restoration AudioMoth schedule AB data
 restoration_AB$X<-NULL
-restoration_A<-read.csv("SAC_audio_restoration_A.csv")
+restoration_A<-read.csv("SAC_audio_restoration_A.csv") #Restoration AudioMoth schedule A data
 restoration_A$X<-NULL
-restoration_B<-read.csv("SAC_audio_restoration_B.csv")
+restoration_B<-read.csv("SAC_audio_restoration_B.csv") #Restoration AudioMoth schedule B data
 restoration_B$X<-NULL
-regeneration_B<-read.csv("SAC_audio_natural_regeneration_B.csv")
+regeneration_B<-read.csv("SAC_audio_natural_regeneration_B.csv") #Natural regeneration AudioMoth schedule B data
 regeneration_B$X<-NULL
 
 
@@ -183,46 +183,46 @@ grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
 ########################## SACs for Sites ######################################
 
 
-analalava<-read.csv("analalava.csv")
+analalava<-read.csv("analalava.csv") #Analalava camera trap data
 analalava$X<-NULL
-analalava_a<-read.csv("analalava_a.csv")
+analalava_a<-read.csv("analalava_a.csv") #Analalava arboreal camera trap data
 analalava_a$X<-NULL
-analalava_t<-read.csv("analalava_t.csv")
+analalava_t<-read.csv("analalava_t.csv") #Analalava terrestrial camera trap data
 analalava_t$X<-NULL
 
-ranomafana<-read.csv("ranomafana.csv")
+ranomafana<-read.csv("ranomafana.csv") #Ranomafana camera trap data
 ranomafana$X<-NULL
-ranomafana_a<-read.csv("ranomafana_a.csv")
+ranomafana_a<-read.csv("ranomafana_a.csv") #Ranomafana arboreal camera trap data
 ranomafana_a$X<-NULL
-ranomafana_t<-read.csv("ranomafana_t.csv")
+ranomafana_t<-read.csv("ranomafana_t.csv") #Ranomafana terrestrial camera trap data
 ranomafana_t$X<-NULL
 
-ankafobe<-read.csv("ankafobe.csv")
+ankafobe<-read.csv("ankafobe.csv") #Ankafobe camera trap data
 ankafobe$X<-NULL
-ankafobe_a<-read.csv("ankafobe_a.csv")
+ankafobe_a<-read.csv("ankafobe_a.csv") #Ankafobe arboreal camera trap data
 ankafobe_a$X<-NULL
-ankafobe_t<-read.csv("ankafobe_t.csv")
+ankafobe_t<-read.csv("ankafobe_t.csv") #Ankafobe terrestrial camera trap data
 ankafobe_t$X<-NULL
 
-marojejy<-read.csv("marojejy.csv")
+marojejy<-read.csv("marojejy.csv") #Marojejy camera trap data
 marojejy$X<-NULL
-marojejy_a<-read.csv("marojejy_a.csv")
+marojejy_a<-read.csv("marojejy_a.csv") #Marojejy arboreal camera trap data
 marojejy_a$X<-NULL
-marojejy_t<-read.csv("marojejy_t.csv")
+marojejy_t<-read.csv("marojejy_t.csv") #Marojejy terrestrial camera trap data
 marojejy_t$X<-NULL
 
-vaingandrano<-read.csv("vaingandrano.csv")
+vaingandrano<-read.csv("vaingandrano.csv") #Vaingandrano  camera trap data
 vaingandrano$X<-NULL
-vaingandrano_a<-read.csv("vaingandrano_a.csv")
+vaingandrano_a<-read.csv("vaingandrano_a.csv") #Vaingandrano arboreal camera trap data
 vaingandrano_a$X<-NULL
-vaingandrano_t<-read.csv("vaingandrano_t.csv")
+vaingandrano_t<-read.csv("vaingandrano_t.csv") #Vaingandrano terrestrial camera trap data
 vaingandrano_t$X<-NULL
 
-schedule_A<-read.csv("SAC_audio_schedule_A.csv")
+schedule_A<-read.csv("SAC_audio_schedule_A.csv") #Ranomafana AudioMoth schedule A data
 schedule_A$X<-NULL
-schedule_B<-read.csv("SAC_audio_schedule_B.csv")
+schedule_B<-read.csv("SAC_audio_schedule_B.csv") #Ranomafana AudioMoth schedule B data
 schedule_B$X<-NULL
-schedule_AB<-read.csv("SAC_audio_all_AB.csv")
+schedule_AB<-read.csv("SAC_audio_all_AB.csv") #Ranomafana AudioMoth schedule AB data
 schedule_AB$X<-NULL
 
 
