@@ -2,7 +2,7 @@ rm(list = ls())
 
 library(vegan)
 library(ggplot2)
-
+library(dplyr)
 
 cl<-read.csv("cl.csv") #Cleared land camera trap data
 cl$X<-NULL
@@ -113,208 +113,213 @@ fb_t
 cl<- specaccum(cl, method = "exact",permutations = 10000)
 cl
 
+specaccum_to_df <- function(x, habitat, method) {
+  data.frame(
+    Sites = x$sites,
+    Richness = x$richness,
+    Lower = x$richness - x$sd,
+    Upper = x$richness + x$sd,
+    Method = method,
+    Habitat = habitat,
+    Type = ifelse(grepl("audio", method, ignore.case = TRUE), "Audio", "Camera")
+  )
+}
+df <- bind_rows(
+  specaccum_to_df(forest, "Mature protected forest", "Combined camera"),
+  specaccum_to_df(forest_a, "Mature protected forest", "Arboreal camera"),
+  specaccum_to_df(forest_t, "Mature protected forest", "Terrestrial camera"),
+  specaccum_to_df(restoration, "Reforestation", "Combined camera"),
+  specaccum_to_df(restoration_a, "Reforestation", "Arboreal camera"),
+  specaccum_to_df(restoration_t, "Reforestation", "Terrestrial camera"),
+  specaccum_to_df(nr, "Natural regeneration", "Combined camera"),
+  specaccum_to_df(nr_a, "Natural regeneration", "Arboreal camera"),
+  specaccum_to_df(nr_t, "Natural regeneration", "Terrestrial camera"),
+  specaccum_to_df(plantation, "Plantation", "Combined camera"),
+  specaccum_to_df(plantation_a, "Plantation", "Arboreal camera"),
+  specaccum_to_df(plantation_t, "Plantation", "Terrestrial camera"),
+  specaccum_to_df(fb, "Burned forest", "Combined camera"),
+  specaccum_to_df(fb_a, "Burned forest", "Arboreal camera"),
+  specaccum_to_df(fb_t, "Burned forest", "Terrestrial camera"),
+  specaccum_to_df(cl, "Cleared land", "Terrestrial camera"),
+  specaccum_to_df(for_ab, "Mature protected forest (audio)", "AudioMoth schedules A and B"),
+  specaccum_to_df(for_a,  "Mature protected forest (audio)", "AudioMoth Schedule A"),
+  specaccum_to_df(for_b,  "Mature protected forest (audio)", "AudioMoth Schedule B"),
+  specaccum_to_df(rest_ab, "Reforestation (audio)", "AudioMoth schedules A and B"),
+  specaccum_to_df(rest_a,  "Reforestation (audio)", "AudioMoth Schedule A"),
+  specaccum_to_df(rest_b,  "Reforestation (audio)", "AudioMoth Schedule B"),
+  specaccum_to_df(natreg_b, "Natural regeneration (audio)", "AudioMoth Schedule B")
+)
 
-par(mfrow = c(3,3), mar = c(2, 2, 1.5, 1.5),
-    cex.lab = 0.6, 
-    cex.axis = 0.6, 
-    cex.main = 0.8,mgp = c(1.8, 0.5, 0))
+cols <- c(
+  "Combined camera" = "green", "Arboreal camera" = "blue", "Terrestrial camera" = "red",
+  "AudioMoth schedules A and B" = "cyan", "AudioMoth Schedule A" = "yellow", "AudioMoth Schedule B" = "violet"
+)
+lines <- c(
+  "Combined camera" = 1, "Arboreal camera" = 3, "Terrestrial camera" = 2,
+  "AudioMoth schedules A and B" = 1, "AudioMoth Schedule A" = 3, "AudioMoth Schedule B" = 2
+)
+df$Habitat <- factor(df$Habitat, levels = c(
+  "Mature protected forest",
+  "Reforestation",
+  "Natural regeneration",
+  "Plantation",
+  "Burned forest", 
+  "Cleared land",
+  "Mature protected forest (audio)",
+  "Reforestation (audio)",
+  "Natural regeneration (audio)"
+))
 
-plot(forest, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", main="Mature protected forest",lty=1)
-plot(forest_t, col = "red",lwd= 2,ci.lty =0, ci.type = "poly",ci.col=alpha("red", 0.1),lty=2,add=T)#dots
-plot(forest_a,col = "blue",lwd= 2,ci.lty = 0, ci.type = "poly",ci.col=alpha("blue", 0.1) ,lty=3,add=T)#dash
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1) 
 
-plot(restoration, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", main="Reforestation",lty=1)
-plot(restoration_a,col = "blue",ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0,lty=3, add=T)
-plot(restoration_t, col = "red",  ci.type = "poly",ci.col=alpha("red", 0.1),lwd= 2,ci.lty =0, lty=2, add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(nr, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", ylim=c(), main="Natural regeneration",lty=1)
-plot(nr_t, col = "red", ci.type = "poly",ci.col=alpha("red", 0.1), lwd= 2,ci.lty =0, lty=2,add=T)
-plot(nr_a,col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0, lty=3,add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(plantation, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", ylim=c(), main="Plantation",lty=1)
-plot(plantation_t,col = "red",  ci.type = "poly",ci.col=alpha("red", 0.1),lwd= 2,ci.lty = 0,lty=2,add=T)
-plot(plantation_a, col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty =0,lty=3, add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(fb, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",lty=1 ,xlab="",
-     main="Burned forest")
-plot(fb_t, col = "red", ci.type = "poly",ci.col=alpha("red", 0.1), lwd= 2,ci.lty =0,lty=2,add=T)
-plot(fb_a,col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0, lty=3,add= T )
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(cl, col = "red",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("red", 0.1),ylab = "",
-     xlab="", main="Cleared land",lty=2)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(for_ab, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", main="Mature protected forest audio",lty=1)
-plot(for_a,col = "blue",ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0,lty=3,add=T)
-plot(for_b, col = "red",  ci.type = "poly",ci.col=alpha("red", 0.1),lwd= 2,ci.lty =0, lty=2,add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(rest_ab, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", ylim=c(), main="Reforestation audio",lty=1)
-plot(rest_b, col = "red", ci.type = "poly",ci.col=alpha("red", 0.1), lwd= 2,ci.lty =0, lty=2,add=T)
-plot(rest_a,col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0,lty=3, add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(natreg_b, col = "red",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("red", 0.1),ylab = "",
-     xlab="", ylim=c(), main="Natural regeneration audio",lty=2)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
+a <- ggplot(df, aes(x = Sites, y = Richness,
+                    color = Method,
+                    linetype = Method,
+                    fill = Method)) +
+  geom_ribbon(aes(ymin = Lower, ymax = Upper), alpha = 0.15, colour = NA) +
+  geom_line(linewidth = 0.9) +
+  facet_wrap(~Habitat, scales = "free", ncol = 3) +
+  scale_color_manual(values = cols) +
+  scale_fill_manual(values = cols) +
+  scale_linetype_manual(values = lines) +
+  labs(x = "Camera Trap Night/Hours (audio)", y = "Species richness") +
+  guides(
+    color = guide_legend(nrow = 1, title = NULL),
+    fill  = guide_legend(nrow = 1, title = NULL),
+    linetype = guide_legend(nrow = 1, title = NULL)
+  ) +
+  theme_bw(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    legend.box = "horizontal",       
+    panel.grid.minor = element_blank(),
+    strip.background = element_rect(fill = "gray75"),
+    strip.text = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+print(a)
 
 
 ########################## SACs for Sites ######################################
+specaccum_to_df <- function(x, site, method) {
+  data.frame(
+    Sites = x$sites,
+    Richness = x$richness,
+    Lower = x$richness - x$sd,
+    Upper = x$richness + x$sd,
+    Method = method,
+    Site = site,
+    Type = ifelse(grepl("audio", method, ignore.case = TRUE) | method %in% c("A","B","AB"),
+                  "Audio", "Camera")
+  )
+}
+
+analalava <- read.csv("analalava.csv"); analalava$X <- NULL
+analalava_a <- read.csv("analalava_a.csv"); analalava_a$X <- NULL
+analalava_t <- read.csv("analalava_t.csv"); analalava_t$X <- NULL
+ranomafana <- read.csv("ranomafana.csv"); ranomafana$X <- NULL
+ranomafana_a <- read.csv("ranomafana_a.csv"); ranomafana_a$X <- NULL
+ranomafana_t <- read.csv("ranomafana_t.csv"); ranomafana_t$X <- NULL
+ankafobe <- read.csv("ankafobe.csv"); ankafobe$X <- NULL
+ankafobe_a <- read.csv("ankafobe_a.csv"); ankafobe_a$X <- NULL
+ankafobe_t <- read.csv("ankafobe_t.csv"); ankafobe_t$X <- NULL
+marojejy <- read.csv("marojejy.csv"); marojejy$X <- NULL
+marojejy_a <- read.csv("marojejy_a.csv"); marojejy_a$X <- NULL
+marojejy_t <- read.csv("marojejy_t.csv"); marojejy_t$X <- NULL
+vaingandrano <- read.csv("vaingandrano.csv"); vaingandrano$X <- NULL
+vaingandrano_a <- read.csv("vaingandrano_a.csv"); vaingandrano_a$X <- NULL
+vaingandrano_t <- read.csv("vaingandrano_t.csv"); vaingandrano_t$X <- NULL
+schedule_A <- read.csv("SAC_audio_schedule_A.csv"); schedule_A$X <- NULL
+schedule_B <- read.csv("SAC_audio_schedule_B.csv"); schedule_B$X <- NULL
+schedule_AB <- read.csv("SAC_audio_all_AB.csv"); schedule_AB$X <- NULL
 
 
-analalava<-read.csv("analalava.csv") #Analalava camera trap data
-analalava$X<-NULL
-analalava_a<-read.csv("analalava_a.csv") #Analalava arboreal camera trap data
-analalava_a$X<-NULL
-analalava_t<-read.csv("analalava_t.csv") #Analalava terrestrial camera trap data
-analalava_t$X<-NULL
+ANA <- specaccum(analalava, method="exact", permutations=10000)
+ANA_A <- specaccum(analalava_a, method="exact", permutations=10000)
+ANA_T <- specaccum(analalava_t, method="exact", permutations=10000)
+RAN <- specaccum(ranomafana, method="exact", permutations=10000)
+RAN_A <- specaccum(ranomafana_a, method="exact", permutations=10000)
+RAN_T <- specaccum(ranomafana_t, method="exact", permutations=10000)
+ANK <- specaccum(ankafobe, method="exact", permutations=10000)
+ANK_A <- specaccum(ankafobe_a, method="exact", permutations=10000)
+ANK_T <- specaccum(ankafobe_t, method="exact", permutations=10000)
+MAR <- specaccum(marojejy, method="exact", permutations=10000)
+MAR_A <- specaccum(marojejy_a, method="exact", permutations=10000)
+MAR_T <- specaccum(marojejy_t, method="exact", permutations=10000)
+VAI <- specaccum(vaingandrano, method="exact", permutations=10000)
+VAI_A <- specaccum(vaingandrano_a, method="exact", permutations=10000)
+VAI_T <- specaccum(vaingandrano_t, method="exact", permutations=10000)
+A <- specaccum(schedule_A, method="exact", permutations=10000)
+B <- specaccum(schedule_B, method="exact", permutations=10000)
+AB <- specaccum(schedule_AB, method="exact", permutations=10000)
 
-ranomafana<-read.csv("ranomafana.csv") #Ranomafana camera trap data
-ranomafana$X<-NULL
-ranomafana_a<-read.csv("ranomafana_a.csv") #Ranomafana arboreal camera trap data
-ranomafana_a$X<-NULL
-ranomafana_t<-read.csv("ranomafana_t.csv") #Ranomafana terrestrial camera trap data
-ranomafana_t$X<-NULL
+df <- bind_rows(
+  specaccum_to_df(MAR, "Marojejy", "Combined camera"),
+  specaccum_to_df(MAR_T, "Marojejy", "Terrestrial camera"),
+  specaccum_to_df(MAR_A, "Marojejy", "Arboreal camera"),
+  specaccum_to_df(ANA, "Analalava", "Combined camera"),
+  specaccum_to_df(ANA_T, "Analalava", "Terrestrial camera"),
+  specaccum_to_df(ANA_A, "Analalava", "Arboreal camera"),
+  specaccum_to_df(ANK, "Ankafobe", "Combined camera"),
+  specaccum_to_df(ANK_T, "Ankafobe", "Terrestrial camera"),
+  specaccum_to_df(ANK_A, "Ankafobe", "Arboreal camera"),
+  specaccum_to_df(RAN, "Ranomafana", "Combined camera"),
+  specaccum_to_df(RAN_T, "Ranomafana", "Terrestrial camera"),
+  specaccum_to_df(RAN_A, "Ranomafana", "Arboreal camera"),
+  specaccum_to_df(VAI, "Ankarabolava-Agnakatrika", "Combined camera"),
+  specaccum_to_df(VAI_T, "Ankarabolava-Agnakatrika", "Terrestrial camera"),
+  specaccum_to_df(VAI_A, "Ankarabolava-Agnakatrika", "Arboreal camera"),
+  specaccum_to_df(AB, "Ranomafana (audio)", "AudioMoth Schedules A and B"),
+  specaccum_to_df(A, "Ranomafana (audio)", "AudioMoth Schedule A"),
+  specaccum_to_df(B, "Ranomafana (audio)", "AudioMoth Schedule B")
+)
 
-ankafobe<-read.csv("ankafobe.csv") #Ankafobe camera trap data
-ankafobe$X<-NULL
-ankafobe_a<-read.csv("ankafobe_a.csv") #Ankafobe arboreal camera trap data
-ankafobe_a$X<-NULL
-ankafobe_t<-read.csv("ankafobe_t.csv") #Ankafobe terrestrial camera trap data
-ankafobe_t$X<-NULL
+cols <- c(
+  "Combined camera" = "green", "Arboreal camera" = "blue", "Terrestrial camera" = "red",
+  "AudioMoth Schedules A and B" = "cyan", "AudioMoth Schedule A" = "yellow", "AudioMoth Schedule B" = "violet"
+)
+lines <- c(
+  "Combined camera" = 1, "Arboreal camera" = 3, "Terrestrial camera" = 2,
+  "AudioMoth Schedules A and B" = 1, "AudioMoth Schedule A" = 3, "AudioMoth Schedule B" = 2
+)
 
-marojejy<-read.csv("marojejy.csv") #Marojejy camera trap data
-marojejy$X<-NULL
-marojejy_a<-read.csv("marojejy_a.csv") #Marojejy arboreal camera trap data
-marojejy_a$X<-NULL
-marojejy_t<-read.csv("marojejy_t.csv") #Marojejy terrestrial camera trap data
-marojejy_t$X<-NULL
+df$Site <- factor(df$Site, levels = c(
+  "Marojejy",
+  "Analalava",
+  "Ankafobe",
+  "Ranomafana",
+  "Ranomafana (audio)",
+  "Ankarabolava-Agnakatrika"
+))
 
-vaingandrano<-read.csv("vaingandrano.csv") #Vaingandrano  camera trap data
-vaingandrano$X<-NULL
-vaingandrano_a<-read.csv("vaingandrano_a.csv") #Vaingandrano arboreal camera trap data
-vaingandrano_a$X<-NULL
-vaingandrano_t<-read.csv("vaingandrano_t.csv") #Vaingandrano terrestrial camera trap data
-vaingandrano_t$X<-NULL
+b <- ggplot(df, aes(x = Sites, y = Richness,
+                    color = Method,
+                    linetype = Method,
+                    fill = Method)) +
+  geom_ribbon(aes(ymin = Lower, ymax = Upper), alpha = 0.15, colour = NA) +
+  geom_line(linewidth = 0.9) +
+  facet_wrap(~Site, scales = "free", ncol = 3) +
+  scale_color_manual(values = cols) +
+  scale_fill_manual(values = cols) +
+  scale_linetype_manual(values = lines) +
+  labs(x = "Camera Trap Nights / Hours (audio)", y = "Species richness") +
+  guides(
+    color = guide_legend(nrow = 1, title = NULL),
+    fill = guide_legend(nrow = 1, title = NULL),
+    linetype = guide_legend(nrow = 1, title = NULL)
+  ) +
+  theme_bw(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    panel.grid.minor = element_blank(),
+    strip.background = element_rect(fill = "grey75"),
+    strip.text = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
 
-schedule_A<-read.csv("SAC_audio_schedule_A.csv") #Ranomafana AudioMoth schedule A data
-schedule_A$X<-NULL
-schedule_B<-read.csv("SAC_audio_schedule_B.csv") #Ranomafana AudioMoth schedule B data
-schedule_B$X<-NULL
-schedule_AB<-read.csv("SAC_audio_all_AB.csv") #Ranomafana AudioMoth schedule AB data
-schedule_AB$X<-NULL
-
-
-#site
-ANK<- specaccum(ankafobe, method = "exact",permutations = 10000)
-ANK
-RAN<- specaccum(ranomafana, method = "exact",permutations = 10000)
-RAN
-ANA<- specaccum(analalava, method = "exact",permutations = 10000)
-ANA
-VAI<- specaccum(vaingandrano, method = "exact",permutations = 10000)
-VAI
-MAR<- specaccum(marojejy, method = "exact",permutations = 10000)
-MAR
-
-#camera types
-ANA_T<- specaccum(analalava_t, method = "exact",permutations = 10000)
-ANA_T
-ANA_A<- specaccum(analalava_a, method = "exact",permutations = 10000)
-ANA_A
-RAN_T<- specaccum(ranomafana_t, method = "exact",permutations = 10000)
-RAN_T
-RAN_A<- specaccum(ranomafana_a, method = "exact",permutations = 10000)
-RAN_A
-MAR_T<- specaccum(marojejy_t, method = "exact",permutations = 10000)
-MAR_T
-MAR_A<- specaccum(marojejy_a, method = "exact",permutations = 10000)
-MAR_A
-VAI_T<- specaccum(vaingandrano_t, method = "exact",permutations = 10000)
-VAI_T
-VAI_A<- specaccum(vaingandrano_a, method = "exact",permutations = 10000)
-VAI_A
-ANK_T<- specaccum(ankafobe_t, method = "exact",permutations = 10000)
-ANK_T
-ANK_A<- specaccum(ankafobe_a, method = "exact",permutations = 10000)
-ANK_A
-
-#audiomoths
-AB<- specaccum(schedule_AB, method = "exact",permutations = 10000)
-AB
-A<- specaccum(schedule_A, method = "exact",permutations = 10000)
-A
-B<- specaccum(schedule_B, method = "exact",permutations = 10000)
-B
+print(b)
 
 
-par(mfrow = c(2,3),mar = c(3, 3, 2, 2),cex.lab = 0.6, 
-    cex.axis = 0.6, 
-    cex.main = 0.8,mgp = c(1.8, 0.5, 0))
-
-#camera
-plot(MAR, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "Species richeness",
-     xlab="Camera Trap Nights", ylim=c(0,20), main="MAROJEJY camera trap",lty=1)
-plot(MAR_T,col = "red",  ci.type = "poly",ci.col=alpha("red", 0.1),lwd= 2,ci.lty = 0,lty=2, add=T)
-plot(MAR_A, col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty =0,lty=3, add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(ANA, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", main="ANALALAVA camera trap",lty=1)
-plot(ANA_T, col = "red",lwd= 2,ci.lty =0, ci.type = "poly",ci.col=alpha("red", 0.1),lty=2,add=T)
-plot(ANA_A,col = "blue",lwd= 2,ci.lty = 0, ci.type = "poly", ci.col=alpha("blue", 0.1),lty=3,add=T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1) 
-
-plot(ANK, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",lty=1 ,xlab="",
-     main="ANKAFOBE camera trap")
-plot(ANK_T, col = "red", ci.type = "poly",ci.col=alpha("red", 0.1), lwd= 2,ci.lty =0,lty=2, add=T)
-plot(ANK_A,col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0,lty=3, add= T )
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(RAN, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", main="RANOMAFANA camera trap",lty=1)
-plot(RAN_A,col = "blue",ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0,lty=3,add=T)
-plot(RAN_T, col = "red",  ci.type = "poly",ci.col=alpha("red", 0.1),lwd= 2,ci.lty =0, lty=2,add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-#audio
-plot(AB, col = "cyan",lwd= 2,ci.lty =0, ci.type = "poly",ci.col=alpha("lightblue", 0.1),ylab = "",
-     xlab="Hours",lty=1, main="RANOMAFANA acoustic data")
-plot(B, col = "violet", lwd=2,ci.lty = 0, add=T,ci.type = "poly", ci.col=alpha("pink", 0.1),lty=2)
-plot(A, col = "yellow",ci.type="poly", ci.col=alpha("yellow",0.1), lwd= 2,ci.lty = 0, add=T,lty=3)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
-
-plot(VAI, col = "green",lwd= 2,ci.lty =0, 
-     ci.type = "poly",ci.col=alpha("green", 0.1),ylab = "",
-     xlab="", ylim=c(), main="ANKARABOLAVA-AGNAKATRIKA camera trap",lty=1)
-plot(VAI_T, col = "red", ci.type = "poly",ci.col=alpha("red", 0.1), lwd= 2,ci.lty =0,lty=2, add=T)
-plot(VAI_A,col = "blue", ci.type = "poly", ci.col=alpha("blue", 0.1),lwd= 2,ci.lty = 0,lty=3, add= T)
-grid(nx = NULL, ny = NULL,lty = 2,col = "gray",lwd = 0.1)
 
 
 
